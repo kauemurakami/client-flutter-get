@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FloatButtonWidget extends StatelessWidget {
   @override
@@ -7,7 +8,9 @@ class FloatButtonWidget extends StatelessWidget {
       foregroundColor: Colors.blueAccent,
       splashColor: Colors.lightBlue,
       child: Icon(Icons.add, color: Colors.white,),
-      onPressed: () {},
+      onPressed: (){
+        Get.toNamed('/addUser');
+      },
     );
   }
 }

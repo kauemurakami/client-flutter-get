@@ -1,33 +1,43 @@
-import 'dart:io';
-
-import 'package:client_deno/data/model/client.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:client_deno/data/model/client.dart';
+import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
+  const baseUrl = "http://192.168.1.5:3333/clients/";
 
 class DenoApiClient {
-  final baseUrl = 'http://172.28.0.1:3333/clients';
   final http.Client httpClient;
 
-  DenoApiClient({@required this.httpClient}) : assert(httpClient != null);
+  DenoApiClient({@required this.httpClient});
 
-  Future<List<Client>> getUsers() async {
-
-    final response = await httpClient.get(baseUrl);
-
-    if (response.statusCode == 200) {
-
-      final json = jsonDecode(response.body);
-      List<Client> clients = json.map<Client>((map) {
-        return Client.fromJson(map);
-      }).toList();
-
-      print(clients);
-
+Future<List<Client>> getUsers() async{
+    http.Response response = await http.get(baseUrl);
+    print(response.body);
+    if(response.statusCode == 200){
+      var jsonResponse = jsonDecode(response.body);
+      List<Client> clients = jsonResponse.map<Client>(
+        (map){
+          return Client.fromJson(map);
+        }
+      ).toList();
       return clients;
+    }else print('erro ao recuperar usuários');
+
+}
+
+/*
+  Future<List<Client>> getUsers() async {
+    final response = await this.httpClient.get(baseUrl);
+    if (response.statusCode == 200) {
+      print(response.body);
+      List<dynamic> dadosJson = json.decode(response.body) ;
+      List<Client> clients = dadosJson.map<Client>(
+        (map){
+          return Client.fromJson(map);
+        }
+      ).toList();
     } else {
       print('erro api');
     }
-    print(response.statusCode.toString());
   }
+  */
 }

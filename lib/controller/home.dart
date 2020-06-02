@@ -6,16 +6,19 @@ import 'package:meta/meta.dart';
 class HomeController extends RxController {
   final ClientRepository clientRepository;
 
-  HomeController({@required this.clientRepository}) : assert(clientRepository != null);
+  HomeController({@required this.clientRepository})
+      : assert(clientRepository != null);
 
-  final clients = List<Client>().obs;
-  final _a = "aa".obs;
+  //List<Client>clients = List<Client>().obs;
+  final _clients = List<Client>().obs;
 
-  get a => this._a.value;
-  set a(value)=> this._a.value = value;
-  
+  List<Client> get clients => this._clients.value;
+  set clients(value) => this._clients.value = value;
+
   getUsers() async {
-    return await clientRepository.getClients();
+    await clientRepository.getClients().then((data) {
+      this.clients = data;
+    });
+    print(this.clients);
   }
-
 }

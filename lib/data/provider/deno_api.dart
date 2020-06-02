@@ -11,12 +11,14 @@ class DenoApiClient {
   DenoApiClient({@required this.httpClient});
 
   getUsers() async {
-    http.Response response = await http.get(baseUrl);
+    http.Response response = await httpClient.get(baseUrl);
     if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
       List<Client> clients = jsonResponse['clients'].map<Client>((map) {
         return Client.fromJson(map);
       }).toList();
+      print(clients[0].name);
+      print('api');
       return clients;
     } else
       print('erro ao recuperar usuários');

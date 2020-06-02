@@ -15,7 +15,7 @@ class HomeController extends RxController {
   set a(value)=> this._a.value = value;
   
   getUsers() async {
-    clients.value = await clientRepository.getClients();
+    return await clientRepository.getClients();
   }
 
 }

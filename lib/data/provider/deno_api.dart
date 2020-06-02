@@ -24,20 +24,5 @@ class DenoApiClient {
       print('erro ao recuperar usuários');
   }
 
-/*
-  Future<List<Client>> getUsers() async {
-    final response = await this.httpClient.get(baseUrl);
-    if (response.statusCode == 200) {
-      print(response.body);
-      List<dynamic> dadosJson = json.decode(response.body) ;
-      List<Client> clients = dadosJson.map<Client>(
-        (map){
-          return Client.fromJson(map);
-        }
-      ).toList();
-    } else {
-      print('erro api');
-    }
-  }
-  */
+
 }

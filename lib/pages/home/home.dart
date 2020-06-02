@@ -24,16 +24,23 @@ class HomePage extends StatelessWidget {
           if (_.clients.isNotEmpty) {
             return ListView.separated(
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_.clients[index].name ?? "Nome"),
-                    subtitle: Text(_.clients[index].email ?? "Email"),
+                  return Dismissible(
+                    onDismissed: (direction){},
+                    direction: DismissDirection.horizontal,
+                    background: Container(color: Colors.green, child: Align( alignment: Alignment(-0.9,0) ,child: Icon(Icons.edit, color: Colors.white,))),
+                    secondaryBackground: Container(color: Colors.red, child: Align( alignment: Alignment(0.9,0) ,child: Icon(Icons.delete, color: Colors.white,))),
+                    key: Key(_.clients[index].id.toString()),
+                    child: ListTile(
+                      title: Text(_.clients[index].name ?? "Nome"),
+                      subtitle: Text(_.clients[index].email ?? "Email"),
+                    ),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(height: 2),
-                itemCount: _.clients.length
-                );
-
-          }else { return LoadingWidget(); }
+                itemCount: _.clients.length);
+          } else {
+            return LoadingWidget();
+          }
         },
       ),
       floatingActionButton: FloatButtonWidget(),

@@ -9,7 +9,7 @@ class FloatButtonWidget extends StatelessWidget {
       splashColor: Colors.lightBlue,
       child: Icon(Icons.add, color: Colors.white,),
       onPressed: (){
-        Get.toNamed('/addUser');
+        Get.toNamed('/dataClient');
       },
     );
   }

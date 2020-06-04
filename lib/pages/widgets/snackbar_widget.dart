@@ -1,10 +1,3 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class SnackBarWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-}
+final snackBarCustom = Get.snackbar("a","b");

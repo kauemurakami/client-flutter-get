@@ -11,36 +11,59 @@ class DenoApiClient {
   DenoApiClient({@required this.httpClient});
 
   getUsers() async {
-    var response = await httpClient.get(baseUrl);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-      List<Client> clients = jsonResponse['clients'].map<Client>((map) {
-        return Client.fromJson(map);
-      }).toList();
-      return clients;
-    } else
-      print('erro ao recuperar usuários');
+    try {
+      var response = await httpClient.get(baseUrl);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+        List<Client> clients = jsonResponse['clients'].map<Client>((map) {
+          return Client.fromJson(map);
+        }).toList();
+        return clients;
+      } else
+        print('erro ao recuperar usuários');
+    } finally {
+      disposeClient();
+    }
   }
 
   getUser(id) async {
-    var response = await httpClient.get('$baseUrl/$id');
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-      Client client = jsonResponse['client'].map<Client>((map) {
-        return Client.fromJson(map);
-      }).toList();
-      return client;
-    } else
-      print('erro ao recuperar usuário');
+    try {
+      var response = await httpClient.get('$baseUrl/$id');
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+        Client client = jsonResponse['client'].map<Client>((map) {
+          return Client.fromJson(map);
+        }).toList();
+        return client;
+      } else
+        print('erro ao recuperar usuário');
+    } finally {
+      disposeClient();
+    }
+  }
+
+  addUser(client) async {
+    try {
+      var response = await httpClient.post(baseUrl, body: client.toJson());
+      if(response.statusCode == 200){
+        return "Cliente inserido com sucesso";
+      }else print ('erro ao adicionar usuário');
+    } finally { disposeClient(); }
   }
 
   deleteUser(id) async {
     var response = await httpClient.delete('$baseUrl$id');
     print(id);
     print('$baseUrl/$id');
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       return "Usuário excluido";
-    }else { return "erro ao excluir usuário"; }
+    } else {
+      return "erro ao excluir usuário";
+    }
+  }
+
+  disposeClient(){
+    this.httpClient.close();
   }
 
 }

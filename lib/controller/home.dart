@@ -19,13 +19,13 @@ class HomeController extends RxController {
   List<Client> get clients => this._clients.value;
   set clients(value) => this._clients.value = value;
 
-  getUsers() async {
-    await clientRepository.getUsers().then((data) {
+  getUsers(){
+    clientRepository.getUsers().then((data) {
       this.clients = data;
     });
   }
-   getUser(id) async {
-    await clientRepository.getUser(id).then((data) {
+   getUser(id){
+    clientRepository.getUser(id).then((data) {
       this.client = data;
     });
   }

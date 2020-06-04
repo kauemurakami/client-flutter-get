@@ -24,9 +24,5 @@ class HomeController extends RxController {
       this.clients = data;
     });
   }
-   getUser(id){
-    clientRepository.getUser(id).then((data) {
-      this.client = data;
-    });
-  }
+
 }

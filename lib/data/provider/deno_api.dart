@@ -21,9 +21,7 @@ class DenoApiClient {
         return clients;
       } else
         print('erro ao recuperar usuários');
-    } finally {
-      disposeClient();
-    }
+    } finally { disposeClient();}
   }
 
   getUser(id) async {
@@ -37,33 +35,32 @@ class DenoApiClient {
         return client;
       } else
         print('erro ao recuperar usuário');
-    } finally {
-      disposeClient();
-    }
+    } finally { disposeClient();}
   }
 
   addUser(client) async {
+    print(client);
     try {
-      var response = await httpClient.post(baseUrl, body: client.toJson());
-      if(response.statusCode == 200){
+      var response = await httpClient.post(baseUrl, headers: {"Content-Type":"application/json"}, body: jsonEncode(client));
+      if (response.statusCode == 200) {
         return "Cliente inserido com sucesso";
-      }else print ('erro ao adicionar usuário');
-    } finally { disposeClient(); }
+      } else
+        print('erro ao adicionar usuário');
+    } finally { disposeClient();}
   }
 
   deleteUser(id) async {
-    var response = await httpClient.delete('$baseUrl$id');
-    print(id);
-    print('$baseUrl/$id');
-    if (response.statusCode == 200) {
-      return "Usuário excluido";
-    } else {
-      return "erro ao excluir usuário";
-    }
+    try {
+      var response = await http.delete('$baseUrl$id');
+      if (response.statusCode == 200) {
+        return "Usuário excluido";
+      } else {
+        return "erro ao excluir usuário";
+      }
+    } finally { disposeClient();}
   }
 
-  disposeClient(){
+  disposeClient() {
     this.httpClient.close();
   }
-
 }

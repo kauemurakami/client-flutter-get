@@ -1,4 +1,6 @@
+import 'package:client_deno/controller/home.dart';
 import 'package:client_deno/data/provider/deno_api.dart';
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
 class ClientRepository {
@@ -6,7 +8,7 @@ class ClientRepository {
 
   ClientRepository({@required this.denoApiClient})
       : assert(denoApiClient != null);
-
+  
   getUsers(){
     return denoApiClient.getUsers();
   }
@@ -20,6 +22,6 @@ class ClientRepository {
   }
 
   addUser(client){
-
+    return denoApiClient.addUser(client);
   }
 }

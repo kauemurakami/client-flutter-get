@@ -31,7 +31,8 @@ dependencies:
   get: ^2.10.1
   meta: ^1.1.8
   http: ^0.12.1
-    
+  validators: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

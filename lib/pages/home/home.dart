@@ -1,5 +1,6 @@
 import 'package:client_deno/controller/client.dart';
 import 'package:client_deno/controller/home.dart';
+import 'package:client_deno/data/model/client.dart';
 import 'package:client_deno/data/provider/deno_api.dart';
 import 'package:client_deno/data/repository/client.dart';
 import 'package:client_deno/pages/home/widgets/floating_button.dart';
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetX<HomeController>(
+        assignId: true,
         init: HomeController(clientRepository: clientRepository),
         initState: (state) {
           Get.find<HomeController>().getUsers();
@@ -30,8 +32,8 @@ class HomePage extends StatelessWidget {
                     onDismissed: (direction){
                       if(direction == DismissDirection.endToStart){
                         ClientController controller = Get.put(ClientController(clientRepository: clientRepository));
-                        _.clients.removeAt(index);
                         controller.deleteUser(_.clients[index].id).then((data){
+                        _.clients.removeAt(index);
                           Get.snackbar("Pronto", controller.message.value);
                         });
                       }else{ }

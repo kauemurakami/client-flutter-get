@@ -6,6 +6,9 @@ class DataClientPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Usuário"),
+      ),
       body: Container(
         padding: EdgeInsets.all(32),
         child: Form(
@@ -41,10 +44,21 @@ class DataClientPage extends StatelessWidget {
                 maxLength: 20,
                 validator: (value) {
                   if (value.isEmpty) {
-                    return "Insira uma senha válida";
-                  } else
+                    return "Insira uma senha";
+                  } else if(value.length < 4){
+                    return "Insira uma senha maior que 4 digitos";
+                  }else
                     return null;
                 },
+              ),
+              RaisedButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                color: Colors.blue,
+                splashColor: Colors.lightBlueAccent,
+                onPressed: (){
+
+                },
+                child: Text("Registrar Editar", style: TextStyle(color: Colors.white)),
               )
             ],
           ),

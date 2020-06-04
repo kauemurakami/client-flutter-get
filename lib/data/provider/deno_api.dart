@@ -17,12 +17,20 @@ class DenoApiClient {
       List<Client> clients = jsonResponse['clients'].map<Client>((map) {
         return Client.fromJson(map);
       }).toList();
-      print(clients[0].name);
-      print('api');
       return clients;
     } else
       print('erro ao recuperar usuários');
   }
 
-
+  getUser(id) async {
+    http.Response response = await httpClient.get('$baseUrl/$id');
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      Client client = jsonResponse['client'].map<Client>((map) {
+        return Client.fromJson(map);
+      }).toList();
+      return client;
+    } else
+      print('erro ao recuperar usuário');
+  }
 }

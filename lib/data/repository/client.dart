@@ -7,8 +7,11 @@ class ClientRepository {
   ClientRepository({@required this.denoApiClient})
       : assert(denoApiClient != null);
 
-  getClients() async {
+  getUsers() async {
     return denoApiClient.getUsers();
+  }
+   getUser(id) async {
+    return denoApiClient.getUser(id);
   }
 
 }

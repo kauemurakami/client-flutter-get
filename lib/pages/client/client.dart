@@ -79,7 +79,7 @@ class DataClientPage extends StatelessWidget {
                         if (form.validate()) {
                           form.save();
                           _.addUser(_.client);
-                          Get.previousRoute(_.client);
+                          
                           Get.back();
                           //print(form.toString());
                           //print(_.client);

@@ -12,9 +12,13 @@ class ClientController extends RxController {
 
   final message = "".obs;
   final _client = Client().obs;
+  final _clients = List<Client>().obs;
   
   get client => this._client.value;
   set client(value) => this._client.value = value;
+
+  List<Client> get clients => this._clients.value;
+  set clients(value) => this._clients.value = value;
 
   deleteUser(id) async {
     return await clientRepository.deleteUser(id).then((data){
@@ -28,5 +32,13 @@ class ClientController extends RxController {
   }
   addUser(client){
     clientRepository.addUser(client);
+  }
+  getUsers(){
+     clientRepository.getUsers().then((data) {
+      clients = data;
+    });
+      print(clients);
+    return clients;
+
   }
 }

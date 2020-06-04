@@ -43,7 +43,7 @@ class DenoApiClient {
     try {
       var response = await httpClient.post(baseUrl, headers: {"Content-Type":"application/json"}, body: jsonEncode(client));
       if (response.statusCode == 200) {
-        return "Cliente inserido com sucesso";
+        return client;
       } else
         print('erro ao adicionar usuário');
     } finally { disposeClient();}

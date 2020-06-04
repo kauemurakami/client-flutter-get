@@ -2,7 +2,7 @@ import 'package:client_deno/data/model/client.dart';
 import 'package:client_deno/data/repository/client.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
-
+import 'package:client_deno/controller/client.dart';
 class HomeController extends RxController {
   final ClientRepository clientRepository;
 
@@ -20,9 +20,11 @@ class HomeController extends RxController {
   set clients(value) => this._clients.value = value;
 
   getUsers(){
-    clientRepository.getUsers().then((data) {
+    ClientController controller = Get.put(ClientController(clientRepository: clientRepository));
+    print(controller.getUsers());
+    /*clientRepository.getUsers().then((data) {
       this.clients = data;
-    });
+    });*/
   }
 
 }

@@ -1,6 +1,5 @@
 import 'package:client_deno/controller/client.dart';
 import 'package:client_deno/controller/home.dart';
-import 'package:client_deno/data/model/client.dart';
 import 'package:client_deno/data/provider/deno_api.dart';
 import 'package:client_deno/data/repository/client.dart';
 import 'package:client_deno/pages/home/widgets/floating_button.dart';
@@ -24,26 +23,40 @@ class HomePage extends StatelessWidget {
         },
         //autoRemove: false,
         builder: (_) {
-          print(_.clients);
           if (_.clients.isNotEmpty) {
             return ListView.separated(
                 itemBuilder: (context, index) {
                   return Dismissible(
-                    onDismissed: (direction){
-                      if(direction == DismissDirection.endToStart){
-                        ClientController controller = Get.put(ClientController(clientRepository: clientRepository));
-                        controller.deleteUser(_.clients[index].id).then((data){
-                        _.clients.removeAt(index);
-                          Get.snackbar("Pronto", controller.message.value);
+                    onDismissed: (direction) {
+                      if (direction == DismissDirection.endToStart) {
+                        ClientController controller = Get.put(ClientController(
+                            clientRepository: clientRepository));
+                        controller.deleteUser(_.clients[index].id).then((data) {
+                          _.clients.removeAt(index);
+                          //Get.snackbar("Pronto", controller.message.value);
                         });
-                      }else{ }
+                      } else {}
                     },
                     direction: DismissDirection.horizontal,
-                    background: Container(color: Colors.green, child: Align( alignment: Alignment(-0.9,0) ,child: Icon(Icons.edit, color: Colors.white,))),
-                    secondaryBackground: Container(color: Colors.red, child: Align( alignment: Alignment(0.9,0) ,child: Icon(Icons.delete, color: Colors.white,))),
+                    background: Container(
+                        color: Colors.green,
+                        child: Align(
+                            alignment: Alignment(-0.9, 0),
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ))),
+                    secondaryBackground: Container(
+                        color: Colors.red,
+                        child: Align(
+                            alignment: Alignment(0.9, 0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ))),
                     key: UniqueKey(),
                     child: ListTile(
-                      onTap: (){
+                      onTap: () {
                         _.client = _.clients[index];
                         Get.toNamed('/panelClient');
                       },

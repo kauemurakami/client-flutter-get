@@ -1,3 +1,4 @@
+import 'package:client_deno/controller/client.dart';
 import 'package:client_deno/controller/home.dart';
 import 'package:client_deno/data/provider/deno_api.dart';
 import 'package:client_deno/data/repository/client.dart';
@@ -19,18 +20,31 @@ class HomePage extends StatelessWidget {
         initState: (state) {
           Get.find<HomeController>().getUsers();
         },
+        //autoRemove: false,
         builder: (_) {
           print(_.clients);
           if (_.clients.isNotEmpty) {
             return ListView.separated(
                 itemBuilder: (context, index) {
                   return Dismissible(
-                    onDismissed: (direction){},
+                    onDismissed: (direction){
+                      if(direction == DismissDirection.endToStart){
+                        ClientController controller = Get.put(ClientController(clientRepository: clientRepository));
+                        _.clients.removeAt(index);
+                        controller.deleteUser(_.clients[index].id).then((data){
+                          Get.snackbar("Pronto", controller.message.value);
+                        });
+                      }else{ }
+                    },
                     direction: DismissDirection.horizontal,
                     background: Container(color: Colors.green, child: Align( alignment: Alignment(-0.9,0) ,child: Icon(Icons.edit, color: Colors.white,))),
                     secondaryBackground: Container(color: Colors.red, child: Align( alignment: Alignment(0.9,0) ,child: Icon(Icons.delete, color: Colors.white,))),
-                    key: Key(_.clients[index].id.toString()),
+                    key: UniqueKey(),
                     child: ListTile(
+                      onTap: (){
+                        _.client = _.clients[index];
+                        Get.toNamed('/panelClient');
+                      },
                       title: Text(_.clients[index].name ?? "Nome"),
                       subtitle: Text(_.clients[index].email ?? "Email"),
                     ),

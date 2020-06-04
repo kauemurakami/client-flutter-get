@@ -10,8 +10,12 @@ class ClientRepository {
   getUsers() async {
     return denoApiClient.getUsers();
   }
-   getUser(id) async {
+
+  getUser(id) async {
     return denoApiClient.getUser(id);
   }
 
+  deleteUser(id) {
+    return denoApiClient.deleteUser(id);
+  }
 }

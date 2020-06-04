@@ -13,7 +13,7 @@ class HomeController extends RxController {
   final _clients = List<Client>().obs;
   final _client = Client().obs;
 
-  Client get client => this._client.value;
+  get client => this._client.value;
   set client(value) => this._client.value = value;
 
   List<Client> get clients => this._clients.value;

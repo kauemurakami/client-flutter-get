@@ -11,7 +11,7 @@ class DenoApiClient {
   DenoApiClient({@required this.httpClient});
 
   getUsers() async {
-    http.Response response = await httpClient.get(baseUrl);
+    var response = await httpClient.get(baseUrl);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       List<Client> clients = jsonResponse['clients'].map<Client>((map) {
@@ -23,7 +23,7 @@ class DenoApiClient {
   }
 
   getUser(id) async {
-    http.Response response = await httpClient.get('$baseUrl/$id');
+    var response = await httpClient.get('$baseUrl/$id');
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       Client client = jsonResponse['client'].map<Client>((map) {
@@ -33,4 +33,14 @@ class DenoApiClient {
     } else
       print('erro ao recuperar usuário');
   }
+
+  deleteUser(id) async {
+    var response = await httpClient.delete('$baseUrl$id');
+    print(id);
+    print('$baseUrl/$id');
+    if(response.statusCode == 200){
+      return "Usuário excluido";
+    }else { return "erro ao excluir usuário"; }
+  }
+
 }

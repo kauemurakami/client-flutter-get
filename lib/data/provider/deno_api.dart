@@ -21,7 +21,7 @@ class DenoApiClient {
         return clients;
       } else
         print('erro ao recuperar usuários');
-    } finally { disposeClient();}
+    } finally { }
   }
 
   getUser(id) async {

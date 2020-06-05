@@ -79,10 +79,8 @@ class DataClientPage extends StatelessWidget {
                         if (form.validate()) {
                           form.save();
                           _.addUser(_.client);
-                          
+                          Get.find<HomeController>().getUsers();
                           Get.back();
-                          //print(form.toString());
-                          //print(_.client);
                         } else {
                           //snackbar
                           print('erro ao salvar');

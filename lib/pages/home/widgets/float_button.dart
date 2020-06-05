@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FloatButtonWidget extends StatelessWidget {
+class FBWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -11,8 +11,8 @@ class FloatButtonWidget extends StatelessWidget {
         Icons.add,
         color: Colors.white,
       ),
-      onPressed: () {
-        Get.toNamed('/dataClient');
+      onPressed: (){
+      Get.toNamed('/dataClient');
       },
     );
   }

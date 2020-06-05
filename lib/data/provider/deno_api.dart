@@ -46,7 +46,7 @@ class DenoApiClient {
         return client;
       } else
         print('erro ao adicionar usuário');
-    } finally { disposeClient();}
+    } finally { }
   }
 
   deleteUser(id) async {

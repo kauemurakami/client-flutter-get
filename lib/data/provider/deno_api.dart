@@ -51,7 +51,7 @@ class DenoApiClient {
 
   deleteUser(id) async {
     try {
-      var response = await http.delete('$baseUrl$id');
+      var response = await httpClient.delete('$baseUrl$id');
       if (response.statusCode == 200) {
         return "Usuário excluido";
       } else {
@@ -62,13 +62,16 @@ class DenoApiClient {
 
   editUser(client) async{
     try {
-      var response = await httpClient.put(baseUrl, headers: {"Content-Type":"application/json"}, body: jsonEncode(client));
+      var id = client.id;
+      var response = await httpClient.put('$baseUrl$id', headers: {"Content-Type":"application/json"}, body: jsonEncode(client));
+      print('$baseUrl$id');
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        return "Usuário excluido";
+        return "usuario alterado";
       } else {
-        return "erro ao excluir usuário";
+        return "erro ao alterar usuário";
       }
-    } finally { disposeClient();}
+    } finally { }
   }
 
   disposeClient() {

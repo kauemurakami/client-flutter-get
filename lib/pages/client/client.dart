@@ -24,6 +24,7 @@ class DataClientPage extends StatelessWidget {
             autoRemove: false,
             init: ClientController(clientRepository: clientRepository),
             builder: (_) {
+              Get.arguments == null ? _.client=null : _.client = Get.arguments;
               return Form(
                 key: formKey,
                 child: Column(
@@ -69,7 +70,7 @@ class DataClientPage extends StatelessWidget {
                           } else
                             return null;
                         }),
-                    RaisedButton(
+                    _.client == null ? RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       color: Colors.blue,
@@ -85,7 +86,26 @@ class DataClientPage extends StatelessWidget {
                           print('erro ao salvar');
                         }
                       },
-                      child: Text("Registrar Editar",
+                      child: Text("Adicionar",
+                          style: TextStyle(color: Colors.white)),
+                    ) :
+                    RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: Colors.blue,
+                      splashColor: Colors.lightBlueAccent,
+                      onPressed: () {
+                        final FormState form = formKey.currentState;
+                        if (form.validate()) {
+                          form.save();
+                          _.editUser(_.client);
+                          Get.offAllNamed('/');
+                        } else {
+                          //snackbar
+                          print('erro ao salvar');
+                        }
+                      },
+                      child: Text("Editar",
                           style: TextStyle(color: Colors.white)),
                     ),
                     RaisedButton(

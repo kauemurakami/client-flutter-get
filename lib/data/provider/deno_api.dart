@@ -60,6 +60,17 @@ class DenoApiClient {
     } finally { disposeClient();}
   }
 
+  editUser(client) async{
+    try {
+      var response = await httpClient.put(baseUrl, headers: {"Content-Type":"application/json"}, body: jsonEncode(client));
+      if (response.statusCode == 200) {
+        return "Usuário excluido";
+      } else {
+        return "erro ao excluir usuário";
+      }
+    } finally { disposeClient();}
+  }
+
   disposeClient() {
     this.httpClient.close();
   }

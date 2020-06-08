@@ -1,4 +1,3 @@
-import 'package:client_deno/controller/home.dart';
 import 'package:client_deno/data/model/client.dart';
 import 'package:client_deno/data/repository/client.dart';
 import 'package:get/get.dart';
@@ -34,7 +33,7 @@ class ClientController extends RxController {
     clientRepository.addUser(client);
   }
   editUser(client){
-    
+    clientRepository.editUser(client);
   }
   getUsers(){
     this.clientRepository.getUsers().then((data) => this.clients = data);

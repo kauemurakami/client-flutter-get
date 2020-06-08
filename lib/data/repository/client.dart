@@ -12,15 +12,15 @@ class ClientRepository {
   getUsers(){
     return denoApiClient.getUsers();
   }
-
   getUser(id){
     return denoApiClient.getUser(id);
   }
-
   deleteUser(id){
     return denoApiClient.deleteUser(id);
   }
-
+  editUser(client){
+    return denoApiClient.editUser(client);
+  }
   addUser(client){
     return denoApiClient.addUser(client);
   }

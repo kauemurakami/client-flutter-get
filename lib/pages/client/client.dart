@@ -24,6 +24,7 @@ class DataClientPage extends StatelessWidget {
             autoRemove: false,
             init: ClientController(clientRepository: clientRepository),
             builder: (_) {
+              Get.arguments != null ? _.client = Get.arguments : _.client = null;
               return Form(
                 key: formKey,
                 child: Column(
@@ -31,7 +32,7 @@ class DataClientPage extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       onSaved: (value) => _.client.name = value,
-                      decoration: InputDecoration(labelText: "Nome"),
+                      decoration: InputDecoration(labelText: _.client != null ? _.client.name : "Nome"),
                       enableSuggestions: true,
                       maxLength: 40,
                       validator: (value) {
@@ -44,7 +45,9 @@ class DataClientPage extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (value) => _.client.email = value,
-                      decoration: InputDecoration(labelText: "Email"),
+                      decoration: InputDecoration(
+                          labelText:
+                              _.client != null ? _.client.email : "Email" ),
                       enableSuggestions: true,
                       maxLength: 32,
                       validator: (value) {
@@ -69,7 +72,7 @@ class DataClientPage extends StatelessWidget {
                           } else
                             return null;
                         }),
-                    RaisedButton(
+                    _.client == null ? RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       color: Colors.blue,
@@ -86,7 +89,38 @@ class DataClientPage extends StatelessWidget {
                           print('erro ao salvar');
                         }
                       },
-                      child: Text("Registrar Editar",
+                      child: Text(_.client != null ? "Editar" : "Salvar",
+                          style: TextStyle(color: Colors.white)),
+                    ) :
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: Colors.blue,
+                      splashColor: Colors.lightBlueAccent,
+                      onPressed: () {
+                        final FormState form = formKey.currentState;
+                        if (form.validate()) {
+                          form.save();
+                          _.editUser(_.client);
+                          Get.find<HomeController>().getUsers();
+                          Get.back();
+                        } else {
+                          //snackbar
+                          print('erro ao salvar');
+                        }
+                      },
+                      child: Text(_.client != null ? "Editar" : "Salvar",
+                          style: TextStyle(color: Colors.white)),
+                    ) ,
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: Colors.red,
+                      splashColor: Colors.redAccent,
+                      onPressed: () {
+                        Get.offAllNamed('/');
+                      },
+                      child: Text("Cancelar",
                           style: TextStyle(color: Colors.white)),
                     )
                   ],

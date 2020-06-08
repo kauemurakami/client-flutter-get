@@ -33,6 +33,9 @@ class ClientController extends RxController {
   addUser(client){
     clientRepository.addUser(client);
   }
+  editUser(client){
+    
+  }
   getUsers(){
     this.clientRepository.getUsers().then((data) => this.clients = data);
   }

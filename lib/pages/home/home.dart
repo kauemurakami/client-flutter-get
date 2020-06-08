@@ -24,19 +24,20 @@ class HomePage extends StatelessWidget {
         //autoRemove: false,
         builder: (_) {      
           if (_.clients.isNotEmpty) {
-            return ListView.separated(
+            return ListView.builder(
                 itemBuilder: (context, index) {
                   return Dismissible(
                     onDismissed: (direction) {
                       if (direction == DismissDirection.endToStart) {
                         ClientController controller = Get.put(ClientController(
                             clientRepository: clientRepository));
-                        controller.deleteUser(_.clients[index].id).then((data) {
+                        controller.deleteUser(_.clients[index].id);
+                        
                           _.clients.removeAt(index);
                           //Get.snackbar("Pronto", controller.message.value);
-                        });
+                        
                       } else {
-
+                        Get.offAndToNamed('/dataClient', arguments: _.clients[index]);
                       }
                     },
                     direction: DismissDirection.horizontal,
@@ -67,7 +68,6 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                separatorBuilder: (context, index) => Divider(height: 2),
                 itemCount: _.clients.length);
           } else {
             return LoadingWidget();

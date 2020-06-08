@@ -24,14 +24,18 @@ class DataClientPage extends StatelessWidget {
             autoRemove: false,
             init: ClientController(clientRepository: clientRepository),
             builder: (_) {
-              Get.arguments == null ? _.client=null : _.client = Get.arguments;
+              Get.arguments == null
+                  ? _.client = _.client
+                  : _.client = Get.arguments;
               return Form(
                 key: formKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
                       keyboardType: TextInputType.text,
-                      onSaved: (value) => _.client.name = value,
+                      onSaved: (value) => value != null
+                          ? _.client.name = value
+                          : _.client.name = _.client.name,
                       decoration: InputDecoration(labelText: "Nome"),
                       enableSuggestions: true,
                       maxLength: 40,
@@ -44,7 +48,9 @@ class DataClientPage extends StatelessWidget {
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      onSaved: (value) => _.client.email = value,
+                      onSaved: (value) => value != null
+                          ? _.client.email = value
+                          : _.client.email = _.client.email,
                       decoration: InputDecoration(labelText: "Email"),
                       enableSuggestions: true,
                       maxLength: 32,
@@ -57,7 +63,9 @@ class DataClientPage extends StatelessWidget {
                     ),
                     TextFormField(
                         keyboardType: TextInputType.text,
-                        onSaved: (value) => _.client.password = value,
+                        onSaved: (value) => value != null
+                            ? _.client.password = value
+                            : _.client.password = _.client.password,
                         decoration: InputDecoration(labelText: "Senha"),
                         enableSuggestions: true,
                         obscureText: true,
@@ -70,51 +78,55 @@ class DataClientPage extends StatelessWidget {
                           } else
                             return null;
                         }),
-                    _.client == null ? RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      color: Colors.blue,
-                      splashColor: Colors.lightBlueAccent,
-                      onPressed: () {
-                        final FormState form = formKey.currentState;
-                        if (form.validate()) {
-                          form.save();
-                          _.addUser(_.client);
-                          Get.offAllNamed('/');
-                        } else {
-                          //snackbar
-                          print('erro ao salvar');
-                        }
-                      },
-                      child: Text("Adicionar",
-                          style: TextStyle(color: Colors.white)),
-                    ) :
-                    RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      color: Colors.blue,
-                      splashColor: Colors.lightBlueAccent,
-                      onPressed: () {
-                        final FormState form = formKey.currentState;
-                        if (form.validate()) {
-                          form.save();
-                          _.editUser(_.client);
-                          Get.offAllNamed('/');
-                        } else {
-                          //snackbar
-                          print('erro ao salvar');
-                        }
-                      },
-                      child: Text("Editar",
-                          style: TextStyle(color: Colors.white)),
-                    ),
+                    Get.arguments == null
+                        ? RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            color: Colors.blue,
+                            splashColor: Colors.lightBlueAccent,
+                            onPressed: () {
+                              final FormState form = formKey.currentState;
+                              if (form.validate()) {
+                                form.save();
+                                _.addUser(_.client);
+                                Get.offAllNamed('/');
+                              } else {
+                                //snackbar
+                                print('erro ao salvar');
+                              }
+                            },
+                            child: Text("Adicionar",
+                                style: TextStyle(color: Colors.white)),
+                          )
+                        : RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            color: Colors.blue,
+                            splashColor: Colors.lightBlueAccent,
+                            onPressed: () {
+                              final FormState form = formKey.currentState;
+                              if (form.validate()) {
+                                form.save();
+                                _.editUser(_.client);
+                                Get.offAllNamed('/');
+                              } else {
+                                //snackbar
+                                print('erro ao salvar');
+                              }
+                            },
+                            child: Text("Editar",
+                                style: TextStyle(color: Colors.white)),
+                          ),
                     RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       color: Colors.red,
-                      child: Text("Cancelar", style: TextStyle(color: Colors.white),),
+                      child: Text(
+                        "Cancelar",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
-                          Get.offAllNamed('/');
+                        Get.offAllNamed('/');
                       },
                     )
                   ],
